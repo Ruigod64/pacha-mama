@@ -1,0 +1,153 @@
+/* Browser support with @supports — progressive enhancement */
+
+/* ── Backdrop filter ── */
+@supports (backdrop-filter: blur(1px)) {
+  .navbar.is-scrolled {
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    background: rgba(27, 67, 50, 0.88);
+  }
+  .reservation-form {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .navbar.is-scrolled {
+    background: rgba(27, 67, 50, 0.98);
+  }
+  .reservation-form {
+    background: rgba(27, 67, 50, 0.9);
+    border-color: rgba(254,253,251,0.25);
+  }
+}
+
+/* ── CSS Grid ── */
+@supports not (display: grid) {
+  .about__container,
+  .branches-grid,
+  .footer__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .about__container > *,
+  .branches-grid > * {
+    flex: 1 1 320px;
+  }
+
+  .gallery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .gallery-card {
+    flex: 0 0 calc(33.333% - 1rem);
+  }
+
+  .menu-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .menu-item {
+    flex: 0 0 calc(50% - 0.5rem);
+  }
+}
+
+/* ── Aspect ratio ── */
+@supports (aspect-ratio: 4 / 3) {
+  .gallery-card { aspect-ratio: 4 / 3; }
+  .about__image-frame { aspect-ratio: 4 / 5; }
+}
+
+@supports not (aspect-ratio: 4 / 3) {
+  .gallery-card {
+    position: relative;
+    height: 0;
+    padding-top: 75%;  /* 4:3 */
+  }
+  .gallery-card__placeholder,
+  .gallery-card__img,
+  .gallery-card__caption {
+    position: absolute;
+    inset: 0;
+  }
+  .about__image-frame {
+    padding-top: 125%;  /* 4:5 */
+    position: relative;
+    height: 0;
+  }
+  .about__image-placeholder,
+  .about__badge {
+    position: absolute;
+  }
+  .about__image-placeholder { inset: 0; }
+}
+
+/* ── CSS Custom Properties ── */
+@supports not (color: var(--test)) {
+  /* Hard-coded fallback colors for browsers without CSS variable support */
+  .navbar.is-scrolled { background: #1B4332; }
+  .btn--primary { background: #40916C; color: #FEFDFB; }
+  .hours-strip { background: #3D2B1F; }
+  .gallery-section { background: #1B4332; }
+  .reservation-section { background: #1B4332; }
+  .footer { background: #3D2B1F; }
+  body { font-family: 'Raleway', Arial, sans-serif; color: #2C1810; background: #FAF7F2; }
+}
+
+/* ── Scroll snap ── */
+@supports (scroll-snap-type: x mandatory) {
+  .reviews-track-wrapper {
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .review-card {
+    scroll-snap-align: start;
+  }
+}
+
+/* ── Gap property ── */
+@supports not (gap: 1rem) {
+  /* Use margin fallbacks */
+  .menu-grid > * + * { margin-top: 1rem; }
+  .gallery-grid > * { margin-bottom: 1rem; }
+  .footer__socials > * + * { margin-left: 0.75rem; }
+}
+
+/* ── Object-fit ── */
+@supports not (object-fit: cover) {
+  .gallery-card__img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+  }
+  /* No ocultar el video; lo maneja JS si hay error */
+}
+
+/* ── Clamp() ── */
+@supports not (font-size: clamp(1rem, 2vw, 2rem)) {
+  .about__title               { font-size: 2.5rem; }
+  .menu-section__title        { font-size: 2.5rem; }
+  .gallery-section__title     { font-size: 2.5rem; }
+  .branches-section__title    { font-size: 2.5rem; }
+  .reviews-section__title     { font-size: 2.5rem; }
+  .reservation-section__title { font-size: 2.5rem; }
+  /* hero__title usa clamp inline, ya tiene fallback en hero.css */
+}
+
+/* ── Pointer: coarse (touch) ── */
+@media (pointer: coarse) {
+  .custom-cursor { display: none !important; }
+
+  /* Larger touch targets on touch devices */
+  .btn { min-height: 52px; padding-block: 14px; }
+  .menu-tab { min-height: 48px; }
+  .gallery-card__caption { opacity: 1; transform: translateY(0); }
+}

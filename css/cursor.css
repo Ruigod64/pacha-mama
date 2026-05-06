@@ -1,0 +1,53 @@
+/* Custom leaf cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 42px;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  /* -42deg: hoja en diagonal apuntando arriba-izquierda, como cursor real */
+  transform: translate(-50%, -10%) rotate(-42deg);
+  transition: transform 0.1s ease;
+  will-change: left, top;
+}
+
+.cursor-leaf {
+  width: 100%;
+  height: 100%;
+  transition: opacity var(--ease-fast);
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.22));
+}
+
+.cursor-leaf--normal  { opacity: 1; position: absolute; inset: 0; }
+.cursor-leaf--dark    { opacity: 0; position: absolute; inset: 0; }
+
+.custom-cursor.is-clicking .cursor-leaf--normal { opacity: 0; }
+.custom-cursor.is-clicking .cursor-leaf--dark   { opacity: 1; }
+
+/* Hover: mantiene la diagonal + escala ligera */
+.custom-cursor.is-hovering {
+  transform: translate(-50%, -10%) rotate(-50deg) scale(1.15);
+}
+
+/* ── Overlay sobre iframes de Google Maps ──
+   pointer-events: auto  → el documento recibe mousemove (cursor sigue al mouse)
+   cursor: none          → oculta el cursor nativo del navegador sobre el mapa
+   El click pasa al iframe mediante JS (mousedown → pointer-events:none → mouseup → restaura) */
+.map-wrap {
+  position: relative;
+  line-height: 0;
+}
+
+.map-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  cursor: none;
+  /* pointer-events: auto por defecto — se gestiona desde cursor.js */
+}
+
+/* Hide on touch devices (managed via JS) */
+.is-touch .custom-cursor { display: none; }
+.is-touch * { cursor: auto !important; }

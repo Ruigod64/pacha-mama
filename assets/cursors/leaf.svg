@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 36" width="26" height="36">
+  <path d="M13 2 C7 4, 2 9, 2 15 C2 22, 5 28, 9 31 L13 34 L17 31 C21 28, 24 22, 24 15 C24 9, 19 4, 13 2Z" fill="#40916C" stroke="#2D6A4F" stroke-width="0.4"/>
+  <line x1="13" y1="3" x2="13" y2="33" stroke="#1B5E3A" stroke-width="0.9" stroke-linecap="round" opacity="0.65"/>
+  <line x1="13" y1="11" x2="7" y2="16" stroke="#1B5E3A" stroke-width="0.55" stroke-linecap="round" opacity="0.55"/>
+  <line x1="13" y1="17" x2="6" y2="21" stroke="#1B5E3A" stroke-width="0.55" stroke-linecap="round" opacity="0.55"/>
+  <line x1="13" y1="23" x2="7" y2="27" stroke="#1B5E3A" stroke-width="0.55" stroke-linecap="round" opacity="0.55"/>
+  <line x1="13" y1="11" x2="19" y2="16" stroke="#1B5E3A" stroke-width="0.55" stroke-linecap="round" opacity="0.55"/>
+  <line x1="13" y1="17" x2="20" y2="21" stroke="#1B5E3A" stroke-width="0.55" stroke-linecap="round" opacity="0.55"/>
+  <line x1="13" y1="23" x2="19" y2="27" stroke="#1B5E3A" stroke-width="0.55" stroke-linecap="round" opacity="0.55"/>
+</svg>

@@ -1,0 +1,179 @@
+/* About Section */
+.about {
+  background: var(--blanco-calido);
+  padding-block: var(--section-v);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Leaf decorative background */
+.about::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(ellipse, var(--verde-palido) 0%, transparent 70%);
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.about__container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-16);
+  align-items: center;
+}
+
+/* Text side */
+.about__content { }
+
+.about__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-4xl);
+  font-weight: 500;
+  color: var(--texto-principal);
+  line-height: 1.08;
+  margin-bottom: var(--sp-6);
+  letter-spacing: -0.02em;
+}
+
+.about__title em {
+  color: var(--verde-principal);
+  font-style: italic;
+}
+
+.about__text {
+  font-size: var(--fs-base);
+  color: var(--texto-secundario);
+  line-height: 1.8;
+  margin-bottom: var(--sp-5);
+  max-width: 52ch;
+}
+
+/* Stats */
+.about__stats {
+  display: flex;
+  gap: var(--sp-8);
+  margin-top: var(--sp-10);
+  padding-top: var(--sp-8);
+  border-top: 1px solid var(--gris-borde);
+}
+
+.about__stat { text-align: left; }
+
+.about__stat-number {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  font-weight: 600;
+  color: var(--verde-principal);
+  line-height: 1;
+  margin-bottom: var(--sp-1);
+}
+
+.about__stat-label {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--texto-suave);
+  line-height: 1.4;
+  max-width: 10ch;
+}
+
+/* Visual side */
+.about__visual {
+  position: relative;
+}
+
+.about__image-frame {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  box-shadow: var(--shadow-xl);
+}
+
+.about__image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    145deg,
+    var(--verde-bosque) 0%,
+    var(--verde-profundo) 40%,
+    var(--cafe-principal) 80%,
+    var(--cafe-oscuro) 100%
+  );
+  position: relative;
+}
+
+/* Replace placeholder with real photo: background-image: url('assets/images/restaurant.jpg'); background-size: cover; */
+.about__image-placeholder::after {
+  content: 'Foto del restaurante';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: rgba(254,253,251,0.4);
+  letter-spacing: 0.1em;
+}
+
+/* Floating badge */
+.about__badge {
+  position: absolute;
+  bottom: var(--sp-6);
+  right: calc(-1 * var(--sp-6));
+  background: var(--cafe-oscuro);
+  color: var(--crema);
+  padding: var(--sp-4) var(--sp-5);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  min-width: 140px;
+}
+
+.about__badge-text {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 500;
+  line-height: 1.3;
+  display: block;
+}
+
+.about__badge-text em {
+  color: var(--verde-claro);
+  font-style: italic;
+}
+
+@media (max-width: 900px) {
+  .about__container {
+    grid-template-columns: 1fr;
+  }
+
+  .about__visual { order: -1; }
+
+  .about__image-frame {
+    aspect-ratio: 16 / 9;
+    max-height: 380px;
+  }
+
+  .about__badge {
+    right: var(--sp-4);
+    bottom: var(--sp-4);
+  }
+
+  .about__stats { gap: var(--sp-6); }
+}
+
+@media (max-width: 480px) {
+  .about__stats {
+    flex-direction: column;
+    gap: var(--sp-4);
+  }
+}

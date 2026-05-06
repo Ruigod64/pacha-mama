@@ -1,0 +1,306 @@
+/* ════════════════════════════════════════
+   NAVBAR — desktop + mobile drawer
+   ════════════════════════════════════════ */
+
+/* ── Header: fijo, ancho completo ── */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 500;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Con backdrop-filter */
+.site-header.is-scrolled {
+  background: rgba(27, 67, 50, 0.97);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.20);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .site-header.is-scrolled {
+    background: rgba(27, 67, 50, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+}
+
+/* Cuando el menú móvil está abierto:
+   - Sube z-index para estar encima de todo
+   - Elimina backdrop-filter: cuando está activo convierte el site-header
+     en containing block de sus hijos position:fixed, haciendo que el menú
+     se posicione relativo al navbar (altura del header) en vez del viewport.
+     Sin backdrop-filter, position:fixed usa el viewport correctamente. */
+.site-header.menu-is-open {
+  z-index: 9800;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(27, 67, 50, 0.98) !important;
+  box-shadow: none !important;
+}
+
+/* ── Barra interna (centrada, max-width) ── */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem var(--container-padding);
+  max-width: var(--container-max);
+  margin-inline: auto;
+  transition: padding 0.3s ease;
+}
+
+.site-header.is-scrolled .navbar {
+  padding-block: 0.65rem;
+}
+
+/* ────────────────────────────────────────
+   LOGO
+   ──────────────────────────────────────── */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.navbar__logo-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.navbar__logo:hover .navbar__logo-icon {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.navbar__logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.navbar__logo-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.03em;
+}
+
+.navbar__logo-sub {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  color: #B7E4C7;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ────────────────────────────────────────
+   LINKS — ESCRITORIO
+   ──────────────────────────────────────── */
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar__link {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 0.45rem 0.8rem;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 0.8rem;
+  right: 0.8rem;
+  height: 1px;
+  background: #74C69D;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s ease;
+}
+
+.navbar__link:hover       { color: #fff; }
+.navbar__link:hover::after { transform: scaleX(1); }
+.navbar__link.is-current  { color: #74C69D; }
+
+/* Botón reservar (desktop) */
+.navbar__link--cta {
+  background: #40916C;
+  color: #fff !important;
+  padding: 0.45rem 1.2rem;
+  border-radius: 9999px;
+  margin-left: 0.4rem;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.navbar__link--cta::after { display: none; }
+.navbar__link--cta:hover  {
+  background: #2D6A4F;
+  transform: translateY(-1px);
+}
+
+/* ────────────────────────────────────────
+   HAMBURGER
+   ──────────────────────────────────────── */
+.navbar__toggle {
+  display: none;          /* oculto en desktop */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  /* Siempre por encima del drawer dentro del mismo stacking context */
+  position: relative;
+  z-index: 10;
+}
+
+.navbar__toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.35s ease, opacity 0.25s ease;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+/* Cruz cuando está abierto */
+.navbar__toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.navbar__toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.navbar__toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ════════════════════════════════════════
+   DRAWER MÓVIL  ≤ 860px
+   ════════════════════════════════════════ */
+@media (max-width: 860px) {
+
+  /* Muestra el hamburger */
+  .navbar__toggle { display: flex; }
+
+  /* Drawer: pantalla completa, sale desde la derecha */
+  .navbar__menu {
+    /* Posición fija respecto al viewport */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Layout */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    /* Fondo verde sólido */
+    background: #1B4332;
+    /* Apilamiento: dentro del site-header (z-index:9800 cuando abierto)
+       el menú queda por debajo del toggle (z:10) */
+    z-index: 5;
+    /* Animación */
+    transform: translateX(100%);
+    transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Scroll interno por si la pantalla es muy pequeña */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Espacio para no tapar el toggle */
+    padding: 5rem 1.5rem 3rem;
+  }
+
+  /* Menú visible */
+  .navbar__menu.is-open {
+    transform: translateX(0);
+  }
+
+  /* Items */
+  .navbar__menu li {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+  }
+
+  /* Links */
+  .navbar__link {
+    display: block;
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    width: 100%;
+    text-align: center;
+    letter-spacing: 0.02em;
+    transition: background 0.2s ease, color 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .navbar__link::after { display: none; }
+
+  .navbar__link:hover,
+  .navbar__link:focus-visible {
+    background: rgba(255, 255, 255, 0.09);
+    color: #fff;
+  }
+
+  /* Último link normal sin borde inferior */
+  .navbar__menu li:nth-last-child(2) .navbar__link {
+    border-bottom: none;
+  }
+
+  /* Botón "Reservar" en el drawer */
+  .navbar__link--cta {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    background: #40916C;
+    color: #fff !important;
+    border-radius: 9999px;
+    border-bottom: none;
+    width: auto;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .navbar__link--cta:hover {
+    background: #52B788;
+    transform: scale(1.03);
+    color: #fff;
+  }
+}

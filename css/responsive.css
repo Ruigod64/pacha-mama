@@ -1,0 +1,105 @@
+/* Responsive — mobile-first breakpoints */
+
+/* ── 1440px+ (large desktop) ── */
+@media (min-width: 1440px) {
+  :root {
+    --container-padding: 4rem;
+  }
+}
+
+/* ── 1024px (desktop) ── */
+@media (max-width: 1024px) {
+  .about__stats { gap: var(--sp-6); }
+
+  .gallery-grid { gap: var(--sp-3); }
+}
+
+/* ── 860px (tablet landscape / small desktop) ── */
+@media (max-width: 860px) {
+  :root { --section-v: clamp(3rem, 8vw, 5rem); }
+
+  /* About */
+  .about__container {
+    grid-template-columns: 1fr;
+    gap: var(--sp-10);
+  }
+  .about__visual { order: -1; }
+  .about__image-frame {
+    aspect-ratio: 16 / 9;
+    max-height: 360px;
+  }
+  .about__badge { right: var(--sp-4); bottom: var(--sp-4); }
+  .about__title { font-size: clamp(2.5rem, 7vw, 3.5rem); }
+
+  /* Gallery */
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-card__caption { opacity: 1; transform: translateY(0); }
+
+  /* Branches */
+  .branches-grid { grid-template-columns: 1fr; }
+
+  /* Reviews */
+  .review-card { flex-basis: calc(50% - var(--sp-3)); }
+
+  /* Footer */
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-8);
+  }
+  .footer__brand { grid-column: 1 / -1; }
+}
+
+/* ── 768px (tablet portrait) ── */
+@media (max-width: 768px) {
+  .hours-strip__inner { gap: var(--sp-5); }
+  .hours-strip__divider { display: none; }
+
+  .menu-tabs { gap: var(--sp-1); overflow-x: auto; flex-wrap: nowrap; justify-content: flex-start; padding-bottom: var(--sp-2); }
+  .menu-tab { flex-shrink: 0; }
+  .menu-grid { grid-template-columns: 1fr; }
+  .menu-grid--cols2 { grid-template-columns: 1fr; }
+}
+
+/* ── 600px (large mobile) ── */
+@media (max-width: 600px) {
+  :root { --container-padding: 1.25rem; }
+
+  /* Hero — estilos mobile en hero.css */
+
+  /* About stats */
+  .about__stats { flex-direction: column; gap: var(--sp-5); }
+
+  /* Reservation */
+  .reservation-form { padding: var(--sp-6) var(--sp-5); }
+  .form-row { grid-template-columns: 1fr; }
+  .form-method-group { flex-direction: column; }
+
+  /* Branches */
+  .branch-card__map { height: 220px; }
+  .branch-card__actions { flex-direction: column; }
+
+  /* Reviews */
+  .review-card { flex-basis: calc(100%); }
+  .reviews-rating-badge { flex-wrap: wrap; justify-content: center; }
+}
+
+/* ── 480px (mobile) ── */
+@media (max-width: 480px) {
+  /* Gallery single column */
+  .gallery-grid { grid-template-columns: 1fr; }
+
+  /* Footer */
+  .footer__grid { grid-template-columns: 1fr; }
+  .footer__bottom { flex-direction: column; text-align: center; gap: var(--sp-3); }
+  .footer__pacha-slogan { display: none; }
+
+  /* Reservation socials */
+  .reservation-socials { flex-direction: column; align-items: stretch; }
+  .social-link { justify-content: center; }
+}
+
+/* ── 375px (small mobile) ── */
+@media (max-width: 375px) {
+  :root { --container-padding: 1rem; }
+  .menu-tab { font-size: 0.65rem; padding: var(--sp-2) var(--sp-2); }
+}
