@@ -126,10 +126,17 @@
   }
 
   function getGap() {
-    if (cards.length < 2) return 0;
-    var r1 = cards[0].getBoundingClientRect();
-    var r2 = cards[1].getBoundingClientRect();
-    return Math.max(0, Math.round(r2.left - r1.right));
+    var style = window.getComputedStyle(track);
+    var raw = style.columnGap || style.gap || '';
+    var n = parseFloat(raw);
+    if (!isNaN(n) && n > 0) return n;
+    // Fallback: read --sp-5 CSS variable (the value used in gap: var(--sp-5))
+    var rootStyle = getComputedStyle(document.documentElement);
+    var sp5 = rootStyle.getPropertyValue('--sp-5').trim();
+    var rootPx = parseFloat(rootStyle.fontSize) || 16;
+    if (sp5.indexOf('rem') !== -1) return parseFloat(sp5) * rootPx;
+    if (sp5.indexOf('px') !== -1) return parseFloat(sp5);
+    return 20;
   }
 
 
