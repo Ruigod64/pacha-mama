@@ -15,7 +15,6 @@
   var current = 0;
   var perView = getPerView();
   var maxIdx  = Math.max(0, cards.length - perView);
-  var autoInterval;
 
   fixCardWidths();
   buildDots();
@@ -86,24 +85,7 @@
     if (e.key === 'ArrowRight') goTo(current + 1);
   });
 
-  // ── Auto-advance ──
-  function startAuto() {
-    autoInterval = setInterval(function () {
-      goTo(current >= maxIdx ? 0 : current + 1);
-    }, 6000);
-  }
-
-  function restartAuto() {
-    clearInterval(autoInterval);
-    startAuto();
-  }
-
-  // Pause on hover
-  var carousel = document.querySelector('.reviews-carousel');
-  if (carousel) {
-    carousel.addEventListener('mouseenter', function () { clearInterval(autoInterval); });
-    carousel.addEventListener('mouseleave', startAuto);
-  }
+  function restartAuto() { /* autoplay removed */ }
 
   // ── Responsive resize ──
   var resizeTimer;
@@ -144,15 +126,11 @@
   }
 
   function getGap() {
-    var style = window.getComputedStyle(track);
-    var raw = style.columnGap || style.gap || '0';
-    var n   = parseInt(raw, 10);
-    return isNaN(n) ? 0 : n;
+    if (cards.length < 2) return 0;
+    var r1 = cards[0].getBoundingClientRect();
+    var r2 = cards[1].getBoundingClientRect();
+    return Math.max(0, Math.round(r2.left - r1.right));
   }
 
-  // Start auto-advance (only if user hasn't opted out of motion)
-  if (!document.documentElement.classList.contains('reduce-motion')) {
-    startAuto();
-  }
 
 })();
